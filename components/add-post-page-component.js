@@ -4,7 +4,6 @@ import { renderUploadImageComponent } from "./upload-image-component.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
-    // renderHeaderComponent({ element });
     // TODO: Реализовываем страницу добавления поста (разметка)
     const appHtml = `
     <div class="page-container">
@@ -54,5 +53,4 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   };
 
   render();
-  
 }
