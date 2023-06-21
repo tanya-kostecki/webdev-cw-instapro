@@ -1,4 +1,4 @@
-import { getPosts } from "./api.js";
+import { addLike, addPost, getPosts, getUserPosts, removeLike } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -15,6 +15,7 @@ import {
   removeUserFromLocalStorage,
   saveUserToLocalStorage,
 } from "./helpers.js";
+import { renderUserPageComponent } from "./components/user-post-component.js";
 
 export let user = getUserFromLocalStorage();
 export let page = null;
@@ -67,19 +68,33 @@ export const goToPage = (newPage, data) => {
     }
 
     if (newPage === USER_POSTS_PAGE) {
-      // TODO: реализовать получение постов юзера из API
+      // TODO: реализовать получение постов юзера из API +
       // console.log("Открываю страницу пользователя: ", data.userId);
-      page = USER_POSTS_PAGE;
-      posts = [];
-      return renderApp();
-    }
+      //Страница загрузки
+      page = LOADING_PAGE;
+      renderApp();
 
+      //загрузка страницы с постом пользователя
+      let userId = data.userId;
+
+      return getUserPosts({ userId, token: getToken() })
+        .then((newPosts) => {
+          page = USER_POSTS_PAGE;
+          posts = newPosts;
+          renderApp();
+        })
+        // .catch((error) => {
+        //   console.error(error);
+        //   goToPage(USER_POSTS_PAGE);
+        // });
+    }
     page = newPage;
     renderApp();
 
     return;
   }
 
+  addRemoveLikeListener();
   throw new Error("страницы не существует");
 };
 
@@ -110,9 +125,15 @@ const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        // TODO: реализовать добавление поста в API
-        console.log("Добавляю пост...", { description, imageUrl });
-        goToPage(POSTS_PAGE);
+        // TODO: реализовать добавление поста в API +
+        // console.log("Добавляю пост...", { description, imageUrl });
+        addPost({
+          description,
+          imageUrl,
+          token: getToken(),
+        }). then(()=> {
+            goToPage(POSTS_PAGE);
+        }); 
       },
     });
   }
@@ -124,10 +145,71 @@ const renderApp = () => {
   }
 
   if (page === USER_POSTS_PAGE) {
-    // TODO: реализовать страницу фотографию пользвателя
-    appEl.innerHTML = "Здесь будет страница фотографий пользователя";
-    return;
+    // TODO: реализовать страницу фотографию пользвателя -
+    // appEl.innerHTML = "Здесь будет страница фотографий пользователя";
+    // return;
+    return renderUserPageComponent({
+      appEl,
+    });
+  }
+  addRemoveLikeListener();
+};
+
+//Реализация функционала лайков
+export const addRemoveLikeListener = () => {
+  const likeButtons = document.querySelectorAll('.like-button');
+  for(const likeButton of likeButtons) {
+
+    likeButton.addEventListener('click', () => {
+      const index = likeButton.dataset.index;
+      console.log(index);
+      let idPost = posts[index].id;
+      let userId = posts[index].idPost;
+
+      if(posts[index].isLiked === false) {
+        addLike({ idPost, token: getToken() })
+          .then(() => {
+            if(page === POSTS_PAGE) {
+              return getPosts({ token: getToken() })
+                .then((newPosts) => {
+                  page = POSTS_PAGE;
+                  posts = newPosts;
+                  renderApp();
+                });
+            } else {
+              return getUserPosts({ userId, token: getToken() })
+                .then((newPosts) => {
+                  page = USER_POSTS_PAGE;
+                  posts - newPosts;
+                  renderApp();
+                });
+            }
+           
+          });
+      } else {
+        removeLike({ idPost, token: getToken() })
+          .then(() => {
+            if(page === POSTS_PAGE) {
+              return getPosts({ token: getToken() })
+                .then((newPosts) => {
+                  page = POSTS_PAGE;
+                  posts = newPosts;
+                  renderApp();
+                });
+            } else {
+              return getUserPosts({ userId, token: getToken() })
+                .then((newPosts) => {
+                  page = USER_POSTS_PAGE;
+                  posts - newPosts;
+                  renderApp();
+                });
+            }
+            
+          });
+      }
+    });
   }
 };
 
 goToPage(POSTS_PAGE);
+addRemoveLikeListener();

@@ -1,7 +1,6 @@
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
-
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
     // TODO: Реализовываем страницу добавления поста (разметка)
@@ -26,9 +25,12 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     appEl.innerHTML = appHtml;
 
+    // renderHeaderComponent({
+    //   element: document.querySelector(".header-container"),
+    // });
+
     let imageUrl; //Заргуженное изображение
     const uploadImageContainer = appEl.querySelector('.upload-image-container'); //Компонент загрузки фотографии
-    const descriptionElem = document.getElementById('description-input');
 
     if(uploadImageContainer) {
       renderUploadImageComponent({
@@ -40,15 +42,19 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     }
 
     document.getElementById("add-button").addEventListener("click", () => {
-      onAddPostClick({
-        //Закрытие всех уязвимостей при вводе
-        description: descriptionElem.value
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;"),
-        imageUrl: imageUrl,
-      });
+      const descriptionElem = document.getElementById('description-input').value;
+
+      if(!imageUrl) {
+        alert('Загрузите изображение');
+        return
+      }
+      
+      if(!descriptionElem) {
+        alert('Добавьте описание к изображению');
+        return;
+      }
+
+      onAddPostClick({ description: descriptionElem, imageUrl: imageUrl });
     });
   };
 

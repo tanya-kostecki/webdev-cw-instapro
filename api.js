@@ -1,6 +1,6 @@
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
-const personalKey = "prod";
+const personalKey = "tanya-kostecki";
 const baseHost = "https://wedev-api.sky.pro";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
@@ -144,7 +144,9 @@ export async function addLike({ token, idPost }) {
     headers: {
       Authorization: token,
     },
-    body: JSON.stringify(idPost),
+    body: JSON.stringify({ 
+      idPost 
+    }),
   });
 };
 
@@ -155,7 +157,9 @@ export async function removeLike({ token, idPost }) {
     headers: {
       Authorization: token,
     },
-    body: JSON.stringify(idPost),
+    body: JSON.stringify({ 
+      idPost
+    }),
   });
 };
 
