@@ -25,6 +25,8 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   ;
     appEl.innerHTML = appHtml;
 
+    let imageUrl;
+
     renderUploadImageComponent({
       element:appEl.querySelector(".upload-image-container"),
       onImageUrlChange(newImageUrl) {

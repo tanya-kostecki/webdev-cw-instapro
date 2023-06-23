@@ -1,6 +1,8 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, addRemoveLikeListener } from "../index.js";
+import { formatDistanceToNow } from "date-fns";
+import { ru } from "date-fns/locale";
 
 
 export function renderPostsPageComponent({ appEl }) {
@@ -8,6 +10,8 @@ export function renderPostsPageComponent({ appEl }) {
   // console.log("Актуальный список постов:", posts)
   //Cоздаем разметку для каждого поста из массива posts
   const postsHtml =  posts.map((post, index) => {
+    const createDate = (formatDistanceToNow(new Date(post.time), { locale: ru }) + ` назад`);
+    console.log(createDate);
     return `<li class="post">
     <div class="post-header" data-user-id="${post.id}">
         <img src="${post.userImage}" class="post-header__user-image">
@@ -29,7 +33,7 @@ export function renderPostsPageComponent({ appEl }) {
       ${post.description}
     </p>
     <p class="post-date">
-      19 минут назад
+      ${createDate}
     </p>
   </li>`
   })
