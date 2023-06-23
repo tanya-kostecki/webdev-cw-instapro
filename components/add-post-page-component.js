@@ -53,7 +53,13 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
         return;
       }
 
-      onAddPostClick({ description: descriptionElem, imageUrl: imageUrl });
+      onAddPostClick({ 
+        description: descriptionElem
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;"), 
+        imageUrl: imageUrl 
+      });
     });
 
   };
