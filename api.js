@@ -147,7 +147,10 @@ export async function addLike({ token, idPost }) {
     body: JSON.stringify({ 
       idPost 
     }),
-  });
+  })
+  .then((response) => {
+    return response.json();
+  })
 };
 
 //запрос на удаление лайка
@@ -160,7 +163,10 @@ export async function removeLike({ token, idPost }) {
     body: JSON.stringify({ 
       idPost
     }),
-  });
+  })
+  .then((response) => {
+    return response.json();
+  })
 };
 
 

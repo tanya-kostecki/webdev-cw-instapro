@@ -25,21 +25,28 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     appEl.innerHTML = appHtml;
 
+    let imageUrl; //Заргуженное изображение
+    // const uploadImageContainer = appEl.querySelector('.upload-image-container'); //Компонент загрузки фотографии
+
+    // if(uploadImageContainer) {
+    //   renderUploadImageComponent({
+    //     element:appEl.querySelector(".upload-image-container"),
+    //     onImageUrlChange(newImageUrl) {
+    //       imageUrl = newImageUrl;
+    //     },
+    //   });
+    // }
+
+    renderUploadImageComponent({
+      element:appEl.querySelector(".upload-image-container"),
+      onImageUrlChange(newImageUrl) {
+        imageUrl = newImageUrl;
+      },
+    });
+
     // renderHeaderComponent({
     //   element: document.querySelector(".header-container"),
     // });
-
-    let imageUrl; //Заргуженное изображение
-    const uploadImageContainer = appEl.querySelector('.upload-image-container'); //Компонент загрузки фотографии
-
-    if(uploadImageContainer) {
-      renderUploadImageComponent({
-        element:appEl.querySelector(".upload-image-container"),
-        onImageUrlChange(newImageUrl) {
-          imageUrl = newImageUrl;
-        },
-      });
-    }
 
     document.getElementById("add-button").addEventListener("click", () => {
       const descriptionElem = document.getElementById('description-input').value;
@@ -60,3 +67,4 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
   render();
 }
+

@@ -83,10 +83,10 @@ export const goToPage = (newPage, data) => {
           posts = newPosts;
           renderApp();
         })
-        // .catch((error) => {
-        //   console.error(error);
-        //   goToPage(USER_POSTS_PAGE);
-        // });
+        .catch((error) => {
+          console.error(error);
+          goToPage(USER_POSTS_PAGE);
+        });
     }
     page = newPage;
     renderApp();
@@ -159,12 +159,12 @@ const renderApp = () => {
 export const addRemoveLikeListener = () => {
   const likeButtons = document.querySelectorAll('.like-button');
   for(const likeButton of likeButtons) {
-
     likeButton.addEventListener('click', () => {
       const index = likeButton.dataset.index;
       console.log(index);
-      let idPost = posts[index].id;
-      let userId = posts[index].idPost;
+
+      let idPost = posts[index].idPost;
+      let userId = posts[index].id;
 
       if(posts[index].isLiked === false) {
         addLike({ idPost, token: getToken() })
@@ -176,7 +176,9 @@ export const addRemoveLikeListener = () => {
                   posts = newPosts;
                   renderApp();
                 });
-            } else {
+            } 
+
+            if(page === USER_POSTS_PAGE) {
               return getUserPosts({ userId, token: getToken() })
                 .then((newPosts) => {
                   page = USER_POSTS_PAGE;
@@ -196,7 +198,9 @@ export const addRemoveLikeListener = () => {
                   posts = newPosts;
                   renderApp();
                 });
-            } else {
+            } 
+
+            if(page === USER_POSTS_PAGE) {
               return getUserPosts({ userId, token: getToken() })
                 .then((newPosts) => {
                   page = USER_POSTS_PAGE;
