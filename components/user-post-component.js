@@ -1,10 +1,10 @@
 import { addRemoveLikeListener, posts } from "../index.js";
 import { renderHeaderComponent } from "./header-component.js";
 
+
 export function renderUserPageComponent({ appEl }) {
     // TODO: реализовать рендер постов из api +
     // console.log("Актуальный список постов:", posts);
-  
     //Cоздаем разметку для каждого поста из массива posts
     const postsHtml =  posts.map((post, index) => {
       return `<li class="post">
