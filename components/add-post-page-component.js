@@ -3,11 +3,12 @@ import { renderUploadImageComponent } from "./upload-image-component.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
-    // TODO: Реализовываем страницу добавления поста (разметка)
+    //Реализовываем страницу добавления поста (разметка)
     const appHtml = `
     <div class="page-container">
       <div class="header-container">
-        <div class="form">
+      </div> 
+      <div class="form">
           <h3 class="form-title>Добавить пост</h3>
           <div class="form-inputs">
             <div class="upload-image-container">
@@ -19,7 +20,6 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
           <label>Опишите фотографию:<textarea class="input textarea" id="description-input" rows="4"></textarea></label>
           <button class="button" id="add-button">Добавить</button>
         </div>
-      </div> 
     </div>
   `
   ;
@@ -34,10 +34,10 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       },
     });
 
-    // //рендер заголовка
-    // renderHeaderComponent({
-    //   element: document.querySelector(".header-container"),
-    // });
+    //рендер заголовка (здесь проблема)
+    renderHeaderComponent({
+      element: document.querySelector(".header-container"),
+    });
 
 
     document.getElementById("add-button").addEventListener("click", () => {

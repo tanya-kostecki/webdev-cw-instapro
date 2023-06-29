@@ -22,11 +22,11 @@ export async function getPosts({ token }) {
     .then((data) => {
       return data.posts.map((post) => {
         return {
-          name: post.user?.name,
+          name: post.user.name,
           description: post.description,
           time: post.createdAt,
           postImage: post.imageUrl,
-          userImage: post.user?.imageUrl,
+          userImage: post.user.imageUrl,
           id: post.user.id,
           idPost: post.id,
           isLiked: post.isLiked,
@@ -102,11 +102,11 @@ export async function getUserPosts({ token, userId }) {
     .then((data) => {
       return data.posts.map((post) => {
         return {
-          name: post.user?.name,
+          name: post.user.name,
           description: post.description,
           time: post.createdAt,
           postImage: post.imageUrl,
-          userImage: post.user?.imageUrl,
+          userImage: post.user.imageUrl,
           id: post.user.id,
           idPost: post.id,
           isLiked: post.isLiked,

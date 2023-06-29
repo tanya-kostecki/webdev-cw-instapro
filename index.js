@@ -170,21 +170,11 @@ export const addRemoveLikeListener = () => {
         addLike({ idPost, token: getToken() })
           .then(() => {
             if(page === POSTS_PAGE) {
-              return getPosts({ token: getToken() })
-                .then((newPosts) => {
-                  page = POSTS_PAGE;
-                  posts = newPosts;
-                  renderApp();
-                });
+              goToPage(POSTS_PAGE);
             } 
 
             if(page === USER_POSTS_PAGE) {
-              return getUserPosts({ userId, token: getToken() })
-                .then((newPosts) => {
-                  page = USER_POSTS_PAGE;
-                  posts - newPosts;
-                  renderApp();
-                });
+              goToPage(USER_POSTS_PAGE, { userId: userId });
             }
            
           });
@@ -192,21 +182,11 @@ export const addRemoveLikeListener = () => {
         removeLike({ idPost, token: getToken() })
           .then(() => {
             if(page === POSTS_PAGE) {
-              return getPosts({ token: getToken() })
-                .then((newPosts) => {
-                  page = POSTS_PAGE;
-                  posts = newPosts;
-                  renderApp();
-                });
+              goToPage(POSTS_PAGE);
             } 
 
             if(page === USER_POSTS_PAGE) {
-              return getUserPosts({ userId, token: getToken() })
-                .then((newPosts) => {
-                  page = USER_POSTS_PAGE;
-                  posts - newPosts;
-                  renderApp();
-                });
+              goToPage(USER_POSTS_PAGE, { userId: userId });
             }
             
           });
