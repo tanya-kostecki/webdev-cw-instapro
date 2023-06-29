@@ -169,4 +169,17 @@ export async function removeLike({ token, idPost }) {
   })
 };
 
+//запрос на удаление поста
+export async function deletePost({ token, idPost }) {
+  return fetch(postsHost + "/" + idPost, {
+    method: "DELETE",
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => {
+    return response.json();
+  })
+};
+
 

@@ -1,4 +1,4 @@
-import { addLike, addPost, getPosts, getUserPosts, removeLike } from "./api.js";
+import { addLike, addPost, getPosts, getUserPosts, removeLike, deletePost } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -195,5 +195,28 @@ export const addRemoveLikeListener = () => {
   }
 };
 
+//Реализация удаление поста
+export const deletePostListener = () => {
+  const deleteButtons = document.querySelectorAll('.delete-button');
+  for (const deleteButton of deleteButtons) {
+    deleteButton.addEventListener('click', () => {
+      const index = deleteButton.dataset.index;
+      let userId = posts[index].id;
+      let idPost = posts[index].idPost;
+
+      deletePost({ idPost, token: getToken() })
+
+      if(page === POSTS_PAGE) {
+        goToPage(POSTS_PAGE);
+      }
+
+      if(page === USER_POSTS_PAGE) {
+        goToPage(USER_POSTS_PAGE, { userId: userId });
+      }
+    });
+  }
+}
+
 goToPage(POSTS_PAGE);
 addRemoveLikeListener();
+deletePostListener();

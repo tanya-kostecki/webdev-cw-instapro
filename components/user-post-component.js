@@ -1,4 +1,6 @@
-import { addRemoveLikeListener, posts } from "../index.js";
+import { deletePost } from "../api.js";
+import { addRemoveLikeListener, goToPage, posts, deletePostListener } from "../index.js";
+import { POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
@@ -33,6 +35,7 @@ export function renderUserPageComponent({ appEl }) {
       <p class="post-date">
         ${createDate}
       </p>
+      <button class="delete-button" data-index="${index}">Удалить пост</button>
     </li>`
     })
   
@@ -56,5 +59,6 @@ export function renderUserPageComponent({ appEl }) {
     });
 
     addRemoveLikeListener();
+    deletePostListener();
   }
   
