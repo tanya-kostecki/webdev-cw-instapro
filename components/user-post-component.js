@@ -35,7 +35,7 @@ export function renderUserPageComponent({ appEl }) {
       <p class="post-date">
         ${createDate}
       </p>
-      <button class="delete-button" data-index="${index}">Удалить пост</button>
+      <button class="button delete-button" data-index="${index}">Удалить пост</button>
     </li>`
     })
   
